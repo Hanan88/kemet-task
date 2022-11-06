@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { Button, Dialog, DialogContent, TextField } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 
 const Prompt = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const handleClickOpen = () => setOpen(true);
+  const navigate = useNavigate();
 
   console.log(name);
+  const toQuiz = () => {
+    navigate("/quiz", { state: name });
+  };
   return (
     <>
       <div style={{ marginTop: "20%" }}>
@@ -21,13 +26,18 @@ const Prompt = () => {
           aria-describedby="alert-dialog-description"
         >
           <DialogContent>
-            <TextField
-              label="Enter your Name"
-              variant="outlined"
-              size="small"
-              onChange={(e) => setName(e.target.value)}
-            />
-            <Button variant="outlined">Start</Button>
+            <form onSubmit={toQuiz}>
+              <TextField
+                label="Enter your Name"
+                variant="outlined"
+                size="small"
+                required
+                onChange={(e) => setName(e.target.value)}
+              />
+              <Button variant="outlined" type="submit">
+                Start
+              </Button>
+            </form>
           </DialogContent>
         </Dialog>
       </div>
